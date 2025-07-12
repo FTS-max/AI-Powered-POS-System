@@ -75,8 +75,11 @@ export async function generateAIResponse(
       id: response.data.id,
       content: response.data.choices[0].message.content,
     };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error generating AI response:', error);
+    if (axios.isAxiosError(error)) {
+      throw new Error(`Failed to generate AI response: ${error.response?.data?.error?.message || error.message}`);
+    }
     throw new Error('Failed to generate AI response');
   }
 }

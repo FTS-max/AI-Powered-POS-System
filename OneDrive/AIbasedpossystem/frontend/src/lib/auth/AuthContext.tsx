@@ -95,7 +95,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       // Set user data
       setUser(response.user);
-    } catch (err) {
+    } catch (err: unknown) {
       const authError = err as AuthError;
       setError(authError.response?.data?.message || 'Login failed. Please check your credentials.');
       throw err;
@@ -113,7 +113,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       await authApi.logout();
       setUser(null);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Logout failed:', err);
     } finally {
       // Always clear local auth data even if API call fails
@@ -133,7 +133,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const updatedUser = await authApi.setActiveShop(shopId);
       setUser(updatedUser);
-    } catch (err) {
+    } catch (err: unknown) {
       const authError = err as AuthError;
       setError(authError.response?.data?.message || 'Failed to set active shop.');
       throw err;

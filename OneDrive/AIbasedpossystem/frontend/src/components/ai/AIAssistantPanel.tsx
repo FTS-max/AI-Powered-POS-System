@@ -14,11 +14,6 @@ interface Message {
   timestamp: Date;
 }
 
-interface ActiveOrder {
-  items: SelectedProduct[];
-  total: number;
-}
-
 interface SelectedProduct {
   id: number;
   name: string;
@@ -34,7 +29,10 @@ interface AIAssistantPanelProps {
   onClose: () => void;
   context?: {
     currentView?: string;
-    activeOrder?: ActiveOrder;
+    activeOrder?: {
+      items: SelectedProduct[];
+      total: number;
+    };
     selectedProducts?: SelectedProduct[];
   };
 }

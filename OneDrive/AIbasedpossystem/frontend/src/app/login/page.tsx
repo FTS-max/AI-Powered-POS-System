@@ -22,12 +22,20 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     
+    interface LoginError extends Error {
+      response?: {
+        data?: {
+          message?: string;
+        };
+      };
+    }
+    
     try {
       await login(username, password);
       router.push('/dashboard');
     } catch (err) {
-      const error = err as { response?: { data?: { message?: string } } };
-      setError(error.response?.data?.message || 'Login failed. Please check your credentials.');
+      const loginError = err as LoginError;
+      setError(loginError.response?.data?.message || 'Login failed. Please check your credentials.');
     }
   };
 
